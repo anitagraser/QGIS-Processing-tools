@@ -53,8 +53,8 @@ for i in range(0,point_count-1):
 	idStart = tree.findVertex( tStart )
 	idStop = tree.findVertex( tStop )
 
-	if idStop == -1:
-	  break
+	if idStop == -1 or idStart == -1:
+	  continue # ignore this point pair
 	else:
 	  p = []
 	  while ( idStart != idStop ):
