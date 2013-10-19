@@ -9,8 +9,8 @@ Some tools depend on scipy. If you use the OSGeo4W installer, install python-sci
 To install tools developed for Processing 1.1 and QGIS 2.0, copy them into
 
 ```
-.qgis2/processing/models
-.qgis2/processing/scripts
+~/.qgis2/processing/models
+~/.qgis2/processing/scripts
 ```
 
 
