@@ -72,4 +72,3 @@ for inFeat  in features:
     writer.addFeature( outFeat )
 
 del writer
-
