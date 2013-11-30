@@ -17,9 +17,9 @@ import numpy as np
 
 
 # "input1" contains the location of the first input layer
-layer = processing.getobject(input1)
+layer = processing.getObject(input1)
 provider = layer.dataProvider()
-features = processing.getfeatures(layer)
+features = processing.features(layer)
 fields = layer.pendingFields().toList()
 join_field1_index = layer.fieldNameIndex(join_field1)
 nFeat = layer.featureCount()
@@ -42,8 +42,8 @@ for inFeat  in features:
     atMap = inFeat.attributes()
     join_value1 = str(atMap[join_field1_index])
 
-    layer2 = processing.getobject(input2)
-    features2 = processing.getfeatures(layer2)
+    layer2 = processing.getObject(input2)
+    features2 = processing.features(layer2)
     join_field2_index = layer2.fieldNameIndex(join_field2)
 
     distances = []

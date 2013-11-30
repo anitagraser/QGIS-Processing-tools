@@ -17,8 +17,8 @@ from qgis.networkanalysis import *
 from processing.core.VectorWriter import VectorWriter
 
 
-point_layer = processing.getobject(points)
-network_layer = processing.getobject(network)
+point_layer = processing.getObject(points)
+network_layer = processing.getObject(network)
 writer = VectorWriter(output, None, [QgsField("order", QVariant.Int)], network_layer.dataProvider().geometryType(), network_layer.crs() )
 
 # prepare graph
@@ -30,7 +30,7 @@ crs = vl.crs()
 builder = QgsGraphBuilder( crs )
 
 # prepare points
-features = processing.getfeatures(point_layer)
+features = processing.features(point_layer)
 point_count = point_layer.featureCount()
 
 points = []
