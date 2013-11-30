@@ -1,0 +1,26 @@
+(dp0
+S'ALG_DESC'
+p1
+VPoints to Route takes a point layer and calculates the corresponding route along a given network layer. 
+p2
+sS'network'
+p3
+VThe network layer contains the routeable line network graph.
+p4
+sS'ALG_CREATOR'
+p5
+VAnita Graser
+p6
+sS'points'
+p7
+VThe points layer contains an ordered list of points.
+p8
+sS'ALG_HELP_CREATOR'
+p9
+VAnita Graser
+p10
+sS'output'
+p11
+VThe output layer contains the resulting route. The route is represented by separate line features. The features have an "order" attribute which indicates the order of features within the route which is directly related to the order of points in the input layer.
+p12
+s.
