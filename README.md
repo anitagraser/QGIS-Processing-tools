@@ -22,4 +22,7 @@ To install the tools developed for Sextante 1.0.8 and QGIS 1.8, copy them into t
 ~/.qgis/python/plugins/sextante/ftools
 ```
 
+== License ==
+
+The tools in this repository are free software; you can redistribute them and/or modify them under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.   
 
