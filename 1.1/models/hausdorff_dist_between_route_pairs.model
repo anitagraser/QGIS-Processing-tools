@@ -1,5 +1,5 @@
 NAME:Densify and calculate Hausdorff distance
-GROUP:Network  comparison
+GROUP:Graph comparison
 PARAMETER:ParameterVector|VECTORLAYER_LAYER1|layer1|1|False
 127.0,87.0
 PARAMETER:ParameterVector|VECTORLAYER_LAYER2|layer2|1|False
