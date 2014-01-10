@@ -17,7 +17,6 @@ from qgis.networkanalysis import *
 
 from processing.core.VectorWriter import VectorWriter
 
-
 line_layer = processing.getObject(lines)
 line_id_field_index = line_layer.fieldNameIndex(line_id_field)
 network_layer = processing.getObject(network)
@@ -25,11 +24,11 @@ writer = VectorWriter(output, None, [QgsField("line_id", QVariant.Int)], network
 
 # prepare graph
 vl = network_layer
-director = QgsLineVectorLayerDirector( vl, -1, '', '', '', 3 )
+director = QgsLineVectorLayerDirector(vl,-1,'','','',3)
 properter = QgsDistanceArcProperter()
-director.addProperter( properter )
+director.addProperter(properter)
 crs = vl.crs()
-builder = QgsGraphBuilder( crs )
+builder = QgsGraphBuilder(crs)
 
 # prepare points
 features = processing.features(line_layer)
@@ -41,46 +40,54 @@ linepoints = {}
 point_no = 0
 
 for f in features:
-    line_attributes = f.attributes()
-    line_id = int(line_attributes[line_id_field_index])
+    line_id = int(f.attributes()[line_id_field_index])
     linepoints[line_id]=[]
     for pt in f.geometry().asPolyline():
         points.append(pt)
         linepoints[line_id].append(point_no)
         point_no += 1
 
-tiedPoints = director.makeGraph( builder, points )
+tiedPoints = director.makeGraph(builder, points)
 graph = builder.graph()
+nElement = 0
+nFeat = line_count 
 
 for line_id, point_ids in linepoints.iteritems():
+    #print line_id
+    progress.setPercentage(int(100 * nElement / nFeat))
+    nElement += 1
+    
     for i in point_ids[0:-1]:
-        tStart = tiedPoints[ i ]
-        tStop = tiedPoints[ i+1 ]
+        from_point = tiedPoints[i]
+        to_point = tiedPoints[i+1]
 
-        idStart = graph.findVertex( tStart )
-        tree = QgsGraphAnalyzer.shortestTree( graph, idStart, 0 )
+        from_id = graph.findVertex(from_point)
+        to_id = graph.findVertex(to_point)
 
-        idStart = tree.findVertex( tStart )
-        idStop = tree.findVertex( tStop )
+        (tree,cost) = QgsGraphAnalyzer.dijkstra(graph,from_id,0)
 
-        if idStop == -1 or idStart == -1:
-          continue # ignore this point pair
+        if tree[to_id] == -1:
+            continue # ignore this point pair
         else:
-          p = []
-          while ( idStart != idStop ):
-            l = tree.vertex( idStop ).inArc()
-            if len( l ) == 0:
-              break
-            e = tree.arc( l[ 0 ] )
-            p.insert( 0, tree.vertex( e.inVertex() ).point() )
-            idStop = e.outVertex()
+            # collect all the vertices between the points
+            route_points = []
+            curPos = to_id 
+            while (curPos != from_id):
+                route_points.append( graph.vertex( graph.arc( tree[ curPos ] ).inVertex() ).point() )
+                curPos = graph.arc( tree[ curPos ] ).outVertex()
 
-          p.insert( 0, tStart )
-
-          # add a feature
-          fet = QgsFeature()
-          fet.setGeometry(QgsGeometry.fromPolyline(p))
-          fet.setAttributes([line_id])
-          writer.addFeature(fet)
-
+            route_points.append(from_point)
+            
+            #print route_points
+            
+            # write the output feature
+            feat = QgsFeature()
+            feat.setGeometry(QgsGeometry.fromPolyline(route_points))
+            feat.setAttributes([line_id])
+            writer.addFeature(feat)
+            del feat 
+        del tree
+        
+del graph 
 del writer
+
