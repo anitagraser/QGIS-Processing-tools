@@ -53,7 +53,6 @@ nElement = 0
 nFeat = line_count 
 
 for line_id, point_ids in linepoints.iteritems():
-    #print line_id
     progress.setPercentage(int(100 * nElement / nFeat))
     nElement += 1
     
@@ -78,16 +77,11 @@ for line_id, point_ids in linepoints.iteritems():
 
             route_points.append(from_point)
             
-            #print route_points
-            
             # write the output feature
             feat = QgsFeature()
             feat.setGeometry(QgsGeometry.fromPolyline(route_points))
             feat.setAttributes([line_id])
             writer.addFeature(feat)
-            del feat 
-        del tree
-        
-del graph 
+            
 del writer
 
