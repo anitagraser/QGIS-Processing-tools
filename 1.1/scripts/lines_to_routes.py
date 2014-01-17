@@ -20,7 +20,7 @@ from processing.core.VectorWriter import VectorWriter
 line_layer = processing.getObject(lines)
 line_id_field_index = line_layer.fieldNameIndex(line_id_field)
 network_layer = processing.getObject(network)
-writer = VectorWriter(output, None, [QgsField("line_id", QVariant.Int)], network_layer.dataProvider().geometryType(), network_layer.crs() )
+writer = VectorWriter(output, None, [QgsField("line_id", QVariant.Int),QgsField("length",QVariant.Double)], network_layer.dataProvider().geometryType(), network_layer.crs() )
 
 # prepare graph
 vl = network_layer
@@ -55,6 +55,7 @@ nFeat = line_count
 for line_id, point_ids in linepoints.iteritems():
     #print line_id
     progress.setPercentage(int(100 * nElement / nFeat))
+    route_points = []
     nElement += 1
     
     for i in point_ids[0:-1]:
@@ -70,23 +71,23 @@ for line_id, point_ids in linepoints.iteritems():
             continue # ignore this point pair
         else:
             # collect all the vertices between the points
-            route_points = []
+            pts = []
             curPos = to_id 
             while (curPos != from_id):
-                route_points.append( graph.vertex( graph.arc( tree[ curPos ] ).inVertex() ).point() )
+                pts.append( graph.vertex( graph.arc( tree[ curPos ] ).inVertex() ).point() )
                 curPos = graph.arc( tree[ curPos ] ).outVertex()
-
-            route_points.append(from_point)
-            
-            #print route_points
-            
-            # write the output feature
-            feat = QgsFeature()
-            feat.setGeometry(QgsGeometry.fromPolyline(route_points))
-            feat.setAttributes([line_id])
-            writer.addFeature(feat)
-            del feat 
-        del tree
+            pts.append(from_point)
+            pts.reverse() # because points were collected in reverse order
+            route_points+=pts
+                        
+    # write the output feature
+    feat = QgsFeature()
+    geom = QgsGeometry.fromPolyline(route_points)
+    feat.setGeometry(geom)
+    feat.setAttributes([line_id,geom.length()])
+    writer.addFeature(feat)
+    del feat 
+    del tree
         
 del graph 
 del writer
