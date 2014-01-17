@@ -44,33 +44,33 @@ graph = builder.graph()
 route_vertices = []
 
 for i in range(0,point_count-1):
-	tStart = tiedPoints[ i ]
-	tStop = tiedPoints[ i+1 ]
+    progress.setPercentage(int(100 * i/ point_count))
+    
+    from_point = tiedPoints[i]
+    to_point = tiedPoints[i+1]
 
-	idStart = graph.findVertex( tStart )
-	tree = QgsGraphAnalyzer.shortestTree( graph, idStart, 0 )
+    from_id = graph.findVertex(from_point)
+    to_id = graph.findVertex(to_point)
 
-	idStart = tree.findVertex( tStart )
-	idStop = tree.findVertex( tStop )
+    (tree,cost) = QgsGraphAnalyzer.dijkstra(graph,from_id,0)
 
-	if idStop == -1 or idStart == -1:
-	  continue # ignore this point pair
-	else:
-	  p = []
-	  while ( idStart != idStop ):
-	    l = tree.vertex( idStop ).inArc()
-	    if len( l ) == 0:
-	      break
-	    e = tree.arc( l[ 0 ] )
-	    p.insert( 0, tree.vertex( e.inVertex() ).point() )
-	    idStop = e.outVertex()
+    if tree[to_id] == -1:
+        continue # ignore this point pair
+    else:
+        # collect all the vertices between the points
+        route_points = []
+        curPos = to_id 
+        while (curPos != from_id):
+            route_points.append( graph.vertex( graph.arc( tree[ curPos ] ).inVertex() ).point() )
+            curPos = graph.arc( tree[ curPos ] ).outVertex()
 
-	  p.insert( 0, tStart )
+        route_points.append(from_point)
 
-	  # add a feature
-	  fet = QgsFeature()
-	  fet.setGeometry(QgsGeometry.fromPolyline(p))
-	  fet.setAttributes([i])
-	  writer.addFeature(fet)
+    # add a feature
+    fet = QgsFeature()
+    fet.setGeometry(QgsGeometry.fromPolyline(route_points))
+    fet.setAttributes([i])
+    writer.addFeature(fet)
 
 del writer
+

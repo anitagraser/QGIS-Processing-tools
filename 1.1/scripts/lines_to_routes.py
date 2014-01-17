@@ -53,7 +53,6 @@ nElement = 0
 nFeat = line_count 
 
 for line_id, point_ids in linepoints.iteritems():
-    #print line_id
     progress.setPercentage(int(100 * nElement / nFeat))
     route_points = []
     nElement += 1
@@ -76,6 +75,7 @@ for line_id, point_ids in linepoints.iteritems():
             while (curPos != from_id):
                 pts.append( graph.vertex( graph.arc( tree[ curPos ] ).inVertex() ).point() )
                 curPos = graph.arc( tree[ curPos ] ).outVertex()
+
             pts.append(from_point)
             pts.reverse() # because points were collected in reverse order
             route_points+=pts
