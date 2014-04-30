@@ -60,8 +60,8 @@ def calculateHausdorffDistance(geom1,geom2):
     return hausdorff
 
 
-origin_layer = processing.getobject(origin_layer)
-target_layer = processing.getobject(target_layer)
+origin_layer = processing.getObject(origin_layer)
+target_layer = processing.getObject(target_layer)
 target_id_column_index = target_layer.fieldNameIndex(target_id_column_index)
 """
 origin_layer = l1
@@ -71,7 +71,7 @@ interval = 1
 """
 
 target_spatial_index = QgsSpatialIndex()
-target_features = processing.getfeatures(target_layer)
+target_features = processing.features(target_layer)
 
 origin_fields = origin_layer.pendingFields().toList()
 origin_fields.append( QgsField("BEST_FIT", QVariant.Int ))
@@ -85,7 +85,7 @@ outFeat = QgsFeature()
 for feat in target_features: 
     target_spatial_index.insertFeature(feat)
     
-origin_features = processing.getfeatures(origin_layer)
+origin_features = processing.features(origin_layer)
 for origin_feature in origin_features:
     center = origin_feature.geometry().centroid().asPoint()
     print str(center)
