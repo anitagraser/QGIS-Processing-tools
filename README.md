@@ -6,7 +6,7 @@ then by topic, then by subfolders.
 
 Some tools depend on scipy. If you use the OSGeo4W installer, install python-scipy from the lib section in Advanced installation.
 
-To install tools developed for Processing 1.1 and QGIS 2.0, copy them into
+To install tools developed for Processing and QGIS 2.x, copy them into
 
 ```
 ~/.qgis2/processing/models
