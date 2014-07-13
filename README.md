@@ -6,6 +6,8 @@ then by topic, then by subfolders.
 
 Some tools depend on scipy. If you use the OSGeo4W installer, install python-scipy from the lib section in Advanced installation.
 
+Some spatial statistics tools depend on PySAL. If you use the OSGeo4W installer, follow the instructions in http://anitagraser.com/2014/07/13/installing-pysal-for-osgeo4w/ to install this dependency.
+
 To install tools developed for Processing and QGIS 2.x, copy them into
 
 ```
