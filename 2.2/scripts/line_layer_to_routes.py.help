@@ -1,0 +1,30 @@
+(dp0
+S'ALG_DESC'
+p1
+VThis script uses the QGIS network analysis library to route between the nodes of all the input line layer. For each input line, one output route will created.
+p2
+sS'network'
+p3
+VThe line layer containing network layer which should be used to route on. 
+p4
+sS'ALG_CREATOR'
+p5
+VAnita Graser
+p6
+sS'lines'
+p7
+VA line layer. For each input line, the script will route between its nodes and create one output route. 
+p8
+sS'line_id_field'
+p9
+VThe line layer field/attribute which contains the line id. 
+p10
+sS'ALG_HELP_CREATOR'
+p11
+VAnita Graser
+p12
+sS'routes'
+p13
+VA line layer with the resulting routes. It will contain one route per input line.
+p14
+s.

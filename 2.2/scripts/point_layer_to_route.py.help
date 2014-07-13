@@ -1,0 +1,26 @@
+(dp0
+S'ALG_DESC'
+p1
+VThis script uses the QGIS network analysis library to route between the points in the input point layer. The points are connected in the order they appear in point layer.\u000a
+p2
+sS'network'
+p3
+VThe line layer containing network layer which should be used to route on.
+p4
+sS'ALG_CREATOR'
+p5
+VAnita Graser
+p6
+sS'route'
+p7
+VA line layer with the resulting route.
+p8
+sS'points'
+p9
+VA point layer. All points in the layer will be connected in the order they appear in the this layer.
+p10
+sS'ALG_HELP_CREATOR'
+p11
+VAnita Graser
+p12
+s.
