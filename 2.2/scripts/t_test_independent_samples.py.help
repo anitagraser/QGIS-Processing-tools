@@ -1,0 +1,46 @@
+(dp0
+S'layer2'
+p1
+VThe layer containing the second attribute which should be used for the test.
+p2
+sS'ALG_DESC'
+p3
+VThis script performs a T-test for the means of two independent samples based on SciPy scipty.stats.ttest_ind() as described on http://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html
+p4
+sS'ALG_CREATOR'
+p5
+VAnita Graser
+p6
+sS'field1'
+p7
+VAttribute of layer1 containing the values for the first sample.
+p8
+sS'layer1'
+p9
+VThe layer containing the first attribute which should be used for the test.
+p10
+sS't_test_results'
+p11
+VAn HTLM file with the t-statistic and p-value results of the T-test.
+p12
+sS'field2'
+p13
+VAttribute of layer2 containing the values for the second sample.
+p14
+sS'ALG_HELP_CREATOR'
+p15
+VAnita Graser
+p16
+sS'output'
+p17
+VAn HTLM file with the t-statistic and p-value results of the T-test.
+p18
+sS'class_field2'
+p19
+VThe attribute of layer2 containing the values for the first sample.
+p20
+sS'class_field1'
+p21
+VThe attribute of layer1 containing the values for the first sample.
+p22
+s.
