@@ -1,0 +1,26 @@
+(dp0
+S'ALG_DESC'
+p1
+VLocal Moran\u2019s I measures local autocorrelation quantitatively which results in n values of local spatial autocorrelation, 1 for each spatial unit.\u000a(https://pythonhosted.org/PySAL/users/tutorials/autocorrelation.html#local-moran-s-i)
+p2
+sS'ALG_CREATOR'
+p3
+VAnita Graser
+p4
+sS'field'
+p5
+VThe field of the input layer which contains the values which should be analyized for clusters.
+p6
+sS'ALG_HELP_CREATOR'
+p7
+VAnita Graser\u000a
+p8
+sS'morans_output'
+p9
+VThe script outputs a polygon vector layer containing the original input features but appended by p-values MORAN_P and scatter plot quadrants MORAN_Q.\u000a\u000aMORAN_Q values indicate quadrat location 1 HH,  2 LH,  3 LL,  4 HL\u000a(github.com/pysal/pysal/blob/master/pysal/esda/moran.py)\u000a\u000acategory - scatter plot quadrant - autocorrelation - interpretation\u000ahigh-high - upper right (red) - positive - Cluster - "I'm high and my neighbors are high."\u000ahigh-low - lower right (pink) - negative - Outlier - "I'm a high outlier among low neighbors."\u000alow-low - lower left (med. blue) - positive - Cluster - "I'm low and my neighbors are low."\u000alow-high - upper left (light blue) - negative - Outlier - "I'm a low outlier among high neighbors."\u000a(http://www.biomedware.com/files/documentation/spacestat/Statistics/LM/Results/Interpreting_univariate_Local_Moran_statistics.htm)
+p10
+sS'input'
+p11
+VThe polygon vector layer which shoudl be analyzed. MUST be a SHAPEFILE!
+p12
+s.
