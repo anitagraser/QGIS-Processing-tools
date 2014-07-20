@@ -15,24 +15,32 @@ sS'network'
 p7
 VThe line layer containing network layer which should be used to route on. 
 p8
-sS'routes_with_oneways'
+sS'ALG_CREATOR'
 p9
-VA line layer with the resulting routes. It will contain one route per input line.
+VAnita Graser
 p10
-sS'lines'
+sS'routes_with_oneways'
 p11
-VA line layer. For each input line, the script will route between its nodes and create one output route. 
+VA line layer with the resulting routes. It will contain one route per input line.
 p12
-sS'line_id_field'
+sS'lines'
 p13
-VThe line layer field/attribute which contains the line id. 
+VA line layer. For each input line, the script will route between its nodes and create one output route. 
 p14
-sS'value_for_two_way_direction'
+sS'line_id_field'
 p15
-VThe direction_field value which represents a two-way connection.
+VThe line layer field/attribute which contains the line id. 
 p16
-sS'direction_field'
+sS'value_for_two_way_direction'
 p17
-VThe network layer attribute/field which contains the one-way information.
+VThe direction_field value which represents a two-way connection.
 p18
+sS'ALG_HELP_CREATOR'
+p19
+VAnita Graser
+p20
+sS'direction_field'
+p21
+VThe network layer attribute/field which contains the one-way information.
+p22
 s.
