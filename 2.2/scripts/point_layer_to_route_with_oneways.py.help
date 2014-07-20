@@ -9,7 +9,7 @@ VThe direction_field value which represents a one-way in the reverse line geomet
 p4
 sS'ALG_DESC'
 p5
-VThis script uses the QGIS network analysis library to route between the points in the input point layer. The points are connected in the order they appear in point layer. This script takes into account oneway direction when romputing the route. 
+VThis script uses the QGIS network analysis library to route between the points in the input point layer. The points are connected in the order they appear in point layer. This script takes into account oneway direction when computing the route. 
 p6
 sS'direction_field'
 p7
@@ -31,12 +31,12 @@ sS'ALG_HELP_CREATOR'
 p15
 VAnita Graser
 p16
-sS'network'
-p17
-VThe line layer containing network layer which should be used to route on.
-p18
 sS'route_with_oneways'
-p19
+p17
 VA line layer with the resulting route.
+p18
+sS'network'
+p19
+VThe line layer containing network layer which should be used to route on.
 p20
 s.
