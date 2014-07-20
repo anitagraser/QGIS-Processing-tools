@@ -1,7 +1,7 @@
 (dp0
 S'ALG_DESC'
 p1
-VThis script uses the QGIS network analysis library to route between the points in the input point layer. The points are connected in the order they appear in point layer.\u000a
+VThis script uses the QGIS network analysis library to route between the points in the input point layer. The points are connected in the order they appear in point layer.
 p2
 sS'network'
 p3
