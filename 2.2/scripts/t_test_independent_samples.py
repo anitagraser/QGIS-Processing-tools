@@ -18,14 +18,13 @@ values = [values1,values2]
 for i in [0,1]:
     layer = processing.getObject(layers[i])
     provider = layer.dataProvider()
-    fields = provider.fields()
-    field_index = layer.fieldNameIndex(field1)
+    field_index = layer.fieldNameIndex(fields[i])
     features = processing.features(layer)
     for feature in features:
         attributes = feature.attributes()
         value = attributes[field_index]
         if value:
-            values[i].append(value)    
+            values[i].append(value)   
 
 # http://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html
 (t_statistic,p_value) = stats.ttest_ind(values1,values2,equal_var=False)
