@@ -7,7 +7,7 @@
 import pysal 
 import numpy as np
 import processing 
-from processing.core.VectorWriter import VectorWriter
+from processing.tools.vector import VectorWriter
 from qgis.core import *
 from PyQt4.QtCore import *
 
@@ -22,6 +22,7 @@ fields.append(QgsField('MORANS_P', QVariant.Double))
 fields.append(QgsField('MORANS_Z', QVariant.Double))
 fields.append(QgsField('MORANS_Q', QVariant.Int))
 fields.append(QgsField('MORANS_I', QVariant.Double))
+fields.append(QgsField('MORANS_C', QVariant.Double))
 writer = VectorWriter(morans_output, None,fields, provider.geometryType(), layer.crs() )
 
 if contiguity == 'queen':
@@ -52,6 +53,7 @@ lm = pysal.Moran_Local(y,w,transformation = "r", permutations = 999)
 #     < -2.58 or > +2.58        |        < 0.01         |       99%
 
 
+sig_q = lm.q * (lm.p_sim <= 0.01) # could make significance level an option
 outFeat = QgsFeature()
 i = 0
 for inFeat in processing.features(layer):
@@ -62,6 +64,7 @@ for inFeat in processing.features(layer):
     attrs.append(float(lm.z_sim[i]))
     attrs.append(int(lm.q[i]))
     attrs.append(float(lm.Is[i]))
+    attrs.append(int(sig_q[i]))
     outFeat.setAttributes(attrs)
     writer.addFeature(outFeat)
     i+=1
