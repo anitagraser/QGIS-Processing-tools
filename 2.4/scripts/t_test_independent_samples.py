@@ -1,4 +1,4 @@
-##Statistics tools=group
+##Statistics=group
 ##layer1=vector
 ##field1=field layer1
 ##layer2=vector
