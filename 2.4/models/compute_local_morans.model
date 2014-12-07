@@ -1,0 +1,141 @@
+{
+    "values": {
+        "inputs": {
+            "TABLEFIELD_FIELD": {
+                "values": {
+                    "pos": {
+                        "values": {
+                            "y": 60.0, 
+                            "x": 340.0
+                        }, 
+                        "class": "point"
+                    }, 
+                    "param": {
+                        "values": {
+                            "isAdvanced": false, 
+                            "name": "TABLEFIELD_FIELD", 
+                            "parent": "VECTORLAYER_AREAS", 
+                            "datatype": -1, 
+                            "value": null, 
+                            "hidden": false, 
+                            "optional": false, 
+                            "description": "field"
+                        }, 
+                        "class": "processing.core.parameters.ParameterTableField"
+                    }
+                }, 
+                "class": "processing.modeler.ModelerAlgorithm.ModelerParameter"
+            }, 
+            "VECTORLAYER_AREAS": {
+                "values": {
+                    "pos": {
+                        "values": {
+                            "y": 60.0, 
+                            "x": 120.0
+                        }, 
+                        "class": "point"
+                    }, 
+                    "param": {
+                        "values": {
+                            "isAdvanced": false, 
+                            "name": "VECTORLAYER_AREAS", 
+                            "shapetype": [
+                                2
+                            ], 
+                            "value": null, 
+                            "exported": null, 
+                            "hidden": false, 
+                            "optional": false, 
+                            "description": "areas"
+                        }, 
+                        "class": "processing.core.parameters.ParameterVector"
+                    }
+                }, 
+                "class": "processing.modeler.ModelerAlgorithm.ModelerParameter"
+            }
+        }, 
+        "group": "Spatial statistics", 
+        "name": "Compute local morans", 
+        "algs": {
+            "QGISREPROJECTLAYER_1": {
+                "values": {
+                    "name": "QGISREPROJECTLAYER_1", 
+                    "paramsFolded": true, 
+                    "outputs": {}, 
+                    "outputsFolded": true, 
+                    "pos": {
+                        "values": {
+                            "y": 160.0, 
+                            "x": 120.0
+                        }, 
+                        "class": "point"
+                    }, 
+                    "dependencies": [], 
+                    "params": {
+                        "INPUT": {
+                            "values": {
+                                "name": "VECTORLAYER_AREAS"
+                            }, 
+                            "class": "processing.modeler.ModelerAlgorithm.ValueFromInput"
+                        }, 
+                        "TARGET_CRS": "EPSG:31287"
+                    }, 
+                    "active": true, 
+                    "consoleName": "qgis:reprojectlayer", 
+                    "description": "Reproject layer"
+                }, 
+                "class": "processing.modeler.ModelerAlgorithm.Algorithm"
+            }, 
+            "SCRIPTLOCALMORANS_1": {
+                "values": {
+                    "name": "SCRIPTLOCALMORANS_1", 
+                    "paramsFolded": true, 
+                    "outputs": {
+                        "morans_output": {
+                            "values": {
+                                "description": "local morans", 
+                                "pos": {
+                                    "values": {
+                                        "y": 305.0, 
+                                        "x": 540.0
+                                    }, 
+                                    "class": "point"
+                                }
+                            }, 
+                            "class": "processing.modeler.ModelerAlgorithm.ModelerOutput"
+                        }
+                    }, 
+                    "pos": {
+                        "values": {
+                            "y": 260.0, 
+                            "x": 340.0
+                        }, 
+                        "class": "point"
+                    }, 
+                    "outputsFolded": true, 
+                    "dependencies": [], 
+                    "params": {
+                        "input": {
+                            "values": {
+                                "alg": "QGISREPROJECTLAYER_1", 
+                                "output": "OUTPUT"
+                            }, 
+                            "class": "processing.modeler.ModelerAlgorithm.ValueFromOutput"
+                        }, 
+                        "field": {
+                            "values": {
+                                "name": "TABLEFIELD_FIELD"
+                            }, 
+                            "class": "processing.modeler.ModelerAlgorithm.ValueFromInput"
+                        }
+                    }, 
+                    "active": true, 
+                    "consoleName": "script:localmorans", 
+                    "description": "local morans"
+                }, 
+                "class": "processing.modeler.ModelerAlgorithm.Algorithm"
+            }
+        }
+    }, 
+    "class": "processing.modeler.ModelerAlgorithm.ModelerAlgorithm"
+}
