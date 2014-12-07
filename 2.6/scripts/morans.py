@@ -6,7 +6,7 @@
 import pysal 
 import numpy as np
 import processing 
-from processing.core.VectorWriter import VectorWriter
+from processing.tools.vector import VectorWriter
 from qgis.core import *
 from PyQt4.QtCore import *
 
