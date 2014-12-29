@@ -5,9 +5,9 @@
 ##line_id_field=field lines
 ##network=vector
 ##direction_field=field network 
-##value_for_forward_direction=string
-##value_for_reverse_direction=string
-##value_for_two_way_direction=string
+##value_for_forward_direction=string forward
+##value_for_reverse_direction=string reverse
+##value_for_two_way_direction=string two_way
 ##routes_with_oneways=output vector
 
 #Algorithm body
