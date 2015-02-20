@@ -1,5 +1,13 @@
 # test based on the example found at
-# http://pysal.readthedocs.org/en/v1.8/library/esda/moran.html#pysal.esda.moran.Moran
+# http://pysal.readthedocs.org/en/latest/library/esda/moran.html#pysal.esda.moran.Moran
+
+#>>> import pysal
+#>>> w = pysal.open(pysal.examples.get_path("stl.gal")).read()
+#>>> f = pysal.open(pysal.examples.get_path("stl_hom.txt"))
+#>>> y = np.array(f.by_col['HR8893'])
+#>>> mi = Moran(y,  w)
+#>>> "%7.5f" % mi.I
+#'0.24366'
 
 from processing import runalg
 import numpy as np
@@ -11,8 +19,10 @@ result = runalg(
     pysal.examples.get_path("stl_hom.shp"),
     "HR8893",
     "rook")
-observed = result['i']
-desired = 0.24365582621771659
+    
+observed = round(result['i'],5)
+desired = 0.24366#0.24365582621771659
+
 try:
     np.testing.assert_equal(observed,desired)
 except ValueError as e:
