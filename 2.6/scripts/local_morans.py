@@ -3,7 +3,6 @@
 ##field=field input
 ##contiguity=string queen
 ##morans_output=output vector
-##p_sim=output string 
 
 import pysal 
 import numpy as np
@@ -53,7 +52,6 @@ lm = pysal.Moran_Local(y,w,transformation = "r", permutations = 999)
 #     < -1.96 or > +1.96        |        < 0.05         |       95%
 #     < -2.58 or > +2.58        |        < 0.01         |       99%
 
-p_sim = str(lm.p_sim)
 
 sig_q = lm.q * (lm.p_sim <= 0.01) # could make significance level an option
 outFeat = QgsFeature()
