@@ -18,7 +18,8 @@ result = runalg(
     "script:morans",
     pysal.examples.get_path("stl_hom.shp"),
     "HR8893",
-    "rook")
+    1 # for rook
+    )
     
 observed = round(result['i'],5)
 desired = 0.24366#0.24365582621771659

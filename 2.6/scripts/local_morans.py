@@ -1,7 +1,7 @@
 ##Spatial statistics=group
 ##input=vector
 ##field=field input
-##contiguity=string queen
+##contiguity=selection queen;rook
 ##morans_output=output vector
 
 import pysal 
@@ -25,10 +25,10 @@ fields.append(QgsField('MORANS_I', QVariant.Double))
 fields.append(QgsField('MORANS_C', QVariant.Double))
 writer = VectorWriter(morans_output, None,fields, provider.geometryType(), layer.crs() )
 
-if contiguity == 'queen':
+if contiguity == 0: # queen
     print 'INFO: Local Moran\'s using queen contiguity'
     w=pysal.queen_from_shapefile(input)
-else:
+else: # 1 for rook
     print 'INFO: Local Moran\'s using rook contiguity'
     w=pysal.rook_from_shapefile(input)
 

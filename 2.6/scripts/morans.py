@@ -1,7 +1,7 @@
 ##Spatial statistics=group
 ##input=vector
 ##field=field input
-##contiguity=string queen
+##contiguity=selection queen;rook
 ##i=output number 
 
 import pysal 
@@ -13,11 +13,11 @@ from PyQt4.QtCore import *
 
 field = field[0:10] # try to handle Shapefile field length limit
 
-if contiguity == 'queen':
-    print 'INFO: Global Moran\'s using queen contiguity'
+if contiguity == 0: # queen
+    print 'INFO: Local Moran\'s using queen contiguity'
     w=pysal.queen_from_shapefile(input)
-else:
-    print 'INFO: Global Moran\'s using rook contiguity'
+else: # 1 for rook
+    print 'INFO: Local Moran\'s using rook contiguity'
     w=pysal.rook_from_shapefile(input)
     
 f = pysal.open(pysal.examples.get_path(input.replace('.shp','.dbf')))

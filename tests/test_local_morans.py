@@ -18,16 +18,16 @@
 #        0.357,  0.241,  0.26 ,  0.401,  0.185,  0.172,  0.248,  0.4  ,
 #        0.482,  0.159,  0.373,  0.455,  0.083,  0.128])
 
-from processing import runalg
+import processing 
 import numpy as np
 import pysal 
 
 np.random.seed(12345)
-result = runalg(
+result = processing.runalg(
     "script:localmorans",
     pysal.examples.get_path("stl_hom.shp"),
     "HR8893",
-    "rook",
+    1, # for rook
     None)
 
 result_layer = processing.load(result['morans_output'])

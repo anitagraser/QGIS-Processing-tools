@@ -2,7 +2,7 @@
 ##input=vector
 ##variable_field=field input
 ##population_field=field input
-##contiguity=string queen
+##contiguity=selection queen;rook
 
 import pysal 
 import numpy as np
@@ -14,11 +14,11 @@ from PyQt4.QtCore import *
 variable_field = variable_field[0:10] # try to handle Shapefile field length limit
 population_field = population_field[0:10]
 
-if contiguity == 'queen':
-    print 'INFO: Global Moran\'s for rates using queen contiguity'
+if contiguity == 0: # queen
+    print 'INFO: Local Moran\'s using queen contiguity'
     w=pysal.queen_from_shapefile(input)
-else:
-    print 'INFO: Global Moran\'s for rates using rook contiguity'
+else: # 1 for rook
+    print 'INFO: Local Moran\'s using rook contiguity'
     w=pysal.rook_from_shapefile(input)
     
 f = pysal.open(pysal.examples.get_path(input.replace('.shp','.dbf')))
