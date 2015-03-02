@@ -1,9 +1,9 @@
 #Definition of inputs and outputs
 #==================================
 ##Routing tools=group
-##points=vector
-##network=vector
-##route=output vector
+##points=vector point
+##network=vector line
+##route=output vector line
 
 #Algorithm body
 #==================================
