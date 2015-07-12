@@ -1,0 +1,182 @@
+{
+    "values": {
+        "inputs": {
+            "RASTERLAYER_DEM": {
+                "values": {
+                    "pos": {
+                        "values": {
+                            "y": 60.0, 
+                            "x": 120.0
+                        }, 
+                        "class": "point"
+                    }, 
+                    "param": {
+                        "values": {
+                            "isAdvanced": false, 
+                            "name": "RASTERLAYER_DEM", 
+                            "showSublayersDialog": true, 
+                            "value": null, 
+                            "exported": null, 
+                            "hidden": false, 
+                            "optional": false, 
+                            "description": "DEM"
+                        }, 
+                        "class": "processing.core.parameters.ParameterRaster"
+                    }
+                }, 
+                "class": "processing.modeler.ModelerAlgorithm.ModelerParameter"
+            }, 
+            "NUMBER_ELEVATIONINTERVALS": {
+                "values": {
+                    "pos": {
+                        "values": {
+                            "y": 60.0, 
+                            "x": 340.0
+                        }, 
+                        "class": "point"
+                    }, 
+                    "param": {
+                        "values": {
+                            "isAdvanced": false, 
+                            "name": "NUMBER_ELEVATIONINTERVALS", 
+                            "min": 0, 
+                            "default": 10, 
+                            "max": 10000, 
+                            "value": null, 
+                            "hidden": false, 
+                            "isInteger": true, 
+                            "description": "elevation intervals"
+                        }, 
+                        "class": "processing.core.parameters.ParameterNumber"
+                    }
+                }, 
+                "class": "processing.modeler.ModelerAlgorithm.ModelerParameter"
+            }
+        }, 
+        "helpContent": {}, 
+        "group": "Cartography", 
+        "name": "Tanaka Contours", 
+        "algs": {
+            "QGISADVANCEDPYTHONFIELDCALCULATOR_1": {
+                "values": {
+                    "name": "QGISADVANCEDPYTHONFIELDCALCULATOR_1", 
+                    "paramsFolded": true, 
+                    "outputs": {
+                        "OUTPUT_LAYER": {
+                            "values": {
+                                "description": "tanaka_contours", 
+                                "pos": {
+                                    "values": {
+                                        "y": 423.0, 
+                                        "x": 459.0
+                                    }, 
+                                    "class": "point"
+                                }
+                            }, 
+                            "class": "processing.modeler.ModelerAlgorithm.ModelerOutput"
+                        }
+                    }, 
+                    "outputsFolded": true, 
+                    "pos": {
+                        "values": {
+                            "y": 378.0, 
+                            "x": 259.0
+                        }, 
+                        "class": "point"
+                    }, 
+                    "dependencies": [], 
+                    "params": {
+                        "FIELD_TYPE": 0, 
+                        "GLOBAL": null, 
+                        "INPUT_LAYER": {
+                            "values": {
+                                "alg": "GRASSV.SPLIT.VERT_1", 
+                                "output": "output"
+                            }, 
+                            "class": "processing.modeler.ModelerAlgorithm.ValueFromOutput"
+                        }, 
+                        "FIELD_PRECISION": 0.0, 
+                        "FIELD_LENGTH": 3.0, 
+                        "FORMULA": "p1 = $geom.asPolyline()[0]\np2 = $geom.asPolyline()[-1]\na = p1.azimuth(p2)\nif a < 0:\n   a += 360\nvalue = a", 
+                        "FIELD_NAME": "azimuth"
+                    }, 
+                    "active": true, 
+                    "consoleName": "qgis:advancedpythonfieldcalculator", 
+                    "description": "Advanced Python field calculator"
+                }, 
+                "class": "processing.modeler.ModelerAlgorithm.Algorithm"
+            }, 
+            "GDALOGRCONTOUR_1": {
+                "values": {
+                    "name": "GDALOGRCONTOUR_1", 
+                    "paramsFolded": true, 
+                    "outputs": {}, 
+                    "pos": {
+                        "values": {
+                            "y": 150.0, 
+                            "x": 255.0
+                        }, 
+                        "class": "point"
+                    }, 
+                    "outputsFolded": true, 
+                    "dependencies": [], 
+                    "params": {
+                        "INPUT_RASTER": {
+                            "values": {
+                                "name": "RASTERLAYER_DEM"
+                            }, 
+                            "class": "processing.modeler.ModelerAlgorithm.ValueFromInput"
+                        }, 
+                        "INTERVAL": {
+                            "values": {
+                                "name": "NUMBER_ELEVATIONINTERVALS"
+                            }, 
+                            "class": "processing.modeler.ModelerAlgorithm.ValueFromInput"
+                        }, 
+                        "FIELD_NAME": "ELEV", 
+                        "EXTRA": null
+                    }, 
+                    "active": true, 
+                    "consoleName": "gdalogr:contour", 
+                    "description": "Contour"
+                }, 
+                "class": "processing.modeler.ModelerAlgorithm.Algorithm"
+            }, 
+            "GRASSV.SPLIT.VERT_1": {
+                "values": {
+                    "name": "GRASSV.SPLIT.VERT_1", 
+                    "paramsFolded": true, 
+                    "outputs": {}, 
+                    "pos": {
+                        "values": {
+                            "y": 250.0, 
+                            "x": 252.0
+                        }, 
+                        "class": "point"
+                    }, 
+                    "outputsFolded": true, 
+                    "dependencies": [], 
+                    "params": {
+                        "GRASS_SNAP_TOLERANCE_PARAMETER": -1.0, 
+                        "GRASS_MIN_AREA_PARAMETER": 0.0001, 
+                        "vertices": 2.0, 
+                        "GRASS_OUTPUT_TYPE_PARAMETER": 0, 
+                        "input": {
+                            "values": {
+                                "alg": "GDALOGRCONTOUR_1", 
+                                "output": "OUTPUT_VECTOR"
+                            }, 
+                            "class": "processing.modeler.ModelerAlgorithm.ValueFromOutput"
+                        }, 
+                        "GRASS_REGION_PARAMETER": null
+                    }, 
+                    "active": true, 
+                    "consoleName": "grass:v.split.vert", 
+                    "description": "v.split.vert - Split lines to shorter segments by max number of vertices."
+                }, 
+                "class": "processing.modeler.ModelerAlgorithm.Algorithm"
+            }
+        }
+    }, 
+    "class": "processing.modeler.ModelerAlgorithm.ModelerAlgorithm"
+}
