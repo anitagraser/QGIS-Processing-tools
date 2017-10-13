@@ -2,7 +2,7 @@
 ##input=vector
 ##min_angle=number 45.0
 ##min_stop_duration=number 120.0
-##min_distance=number 30.0
+##min_distance=number 100.0
 ##max_distance=number 1000.0
 ##characteristic_points=output vector
 
@@ -49,7 +49,6 @@ class Analyzer:
                         self.i = self.j
                         self.j = self.k
                         continue 
-                        
                     else:
                         # compute the average spatial position to represent the similar points
                         m = self.j + (self.k-1-self.j)/2
@@ -62,7 +61,6 @@ class Analyzer:
                     self.significant_points.append(self.traj.pointN(self.j))
                     self.i = self.j
                     self.j = self.k
-            
                 else:
                     self.j += 1
                         
@@ -101,26 +99,19 @@ class Analyzer:
             return False
         
 
-
-
 l = processing.getObject(input)
 
 significant_points = []
 
 for f in l.getFeatures():
     line = f.geometry().geometry()
-
     n = line.numPoints()
     #print("Line with {0} points".format(n))
-
-    max_distance = 1000 # meters 
-    min_distance = 100 # meters
-    min_stop_duration = 120 # seconds 
-
+    #max_distance = 1000 # meters 
+    #min_distance = 100 # meters
+    #min_stop_duration = 120 # seconds 
     a = Analyzer(line, max_distance, min_distance, min_stop_duration)
-    
     significant_points = significant_points + a.find_significant_points()
-
 
 print("Number of significant points: {0}".format(len(significant_points)))
 
@@ -128,15 +119,9 @@ fields = []
 geom_type = 1 # point 
 writer = VectorWriter(characteristic_points, None, fields, geom_type, l.crs() )
 
-
-
-
 for pt in significant_points:
     feat = QgsFeature()
     feat.setGeometry(QgsGeometry.fromPoint(QgsPoint(pt.x(),pt.y())))
     writer.addFeature(feat)
     
-    
 del writer 
-
-
