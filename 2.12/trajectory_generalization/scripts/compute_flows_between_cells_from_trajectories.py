@@ -30,7 +30,7 @@ class SequenceGenerator():
         for i, pt in enumerate(points):
             id = self.cell_index.nearestNeighbor(pt,1)[0]
             nearest_cell = self.id_to_centroid[id][0]
-            nearest_cell_id = nearest_cell["GROUP"]
+            nearest_cell_id = nearest_cell.id()
             prev_cell_id = None
             if len(this_sequence) > 1:
                 prev_cell_id = this_sequence[-1]
