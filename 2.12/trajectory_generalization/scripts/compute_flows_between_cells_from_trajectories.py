@@ -1,5 +1,7 @@
 ##Trajectory generalization=group
 ##input_trajectories=vector
+##weight_field=field input_trajectories
+##use_weight_field=boolean
 ##input_cell_centers=vector
 ##flow_lines=output vector
 ##cell_counts=output vector 
@@ -13,14 +15,19 @@ from datetime import datetime, timedelta
 import processing 
 
 class SequenceGenerator():
-    def __init__(self,centroid_layer,trajectory_layer):
+    def __init__(self,centroid_layer,trajectory_layer,weight_field=None):
         centroids = [f for f in centroid_layer.getFeatures()]
         self.cell_index = QgsSpatialIndex()
         for f in centroids:
             self.cell_index.insertFeature(f)
         self.id_to_centroid = {f.id(): [f,[0,0,0,0,0]] for (f) in centroids}
-        
+        self.weight_field = weight_field
+        if weight_field is not None:
+            self.weightIdx = trajectory_layer.fieldNameIndex(weight_field)
+        else:
+            self.weightIdx = None
         self.sequences = {}
+        
         for traj in trajectory_layer.getFeatures():
             self.evaluate_trajectory(traj)
             
@@ -34,10 +41,14 @@ class SequenceGenerator():
             prev_cell_id = None
             if len(this_sequence) > 1:
                 prev_cell_id = this_sequence[-1]
-                if self.sequences.has_key((prev_cell_id,nearest_cell_id)):
-                    self.sequences[(prev_cell_id,nearest_cell_id)] = self.sequences[(prev_cell_id,nearest_cell_id)] + 1 
+                if self.weight_field is not None:
+                    weight = trajectory.attributes()[self.weightIdx]
                 else:
-                    self.sequences[(prev_cell_id,nearest_cell_id)] = 1
+                    weight = 1
+                if self.sequences.has_key((prev_cell_id,nearest_cell_id)):
+                    self.sequences[(prev_cell_id,nearest_cell_id)] += weight
+                else:
+                    self.sequences[(prev_cell_id,nearest_cell_id)] = weight
             if nearest_cell_id != prev_cell_id: 
                 # we have changed to a new cell --> up the counter 
                 m = trajectory.geometry().geometry().pointN(i).m()
@@ -60,7 +71,7 @@ class SequenceGenerator():
 
 centroid_layer = processing.getObject(input_cell_centers)
 trajectory_layer = processing.getObject(input_trajectories)
-sg = SequenceGenerator(centroid_layer,trajectory_layer)
+sg = SequenceGenerator(centroid_layer,trajectory_layer, weight_field if use_weight_field else None)
 
 fields = [QgsField('FROM', QVariant.Int),
               QgsField('TO', QVariant.Int),
