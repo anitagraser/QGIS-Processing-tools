@@ -41,7 +41,7 @@ class SequenceGenerator():
             prev_cell_id = None
             if len(this_sequence) > 1:
                 prev_cell_id = this_sequence[-1]
-                if weight_field is not None:
+                if self.weight_field is not None:
                     weight = trajectory.attributes()[self.weightIdx]
                 else:
                     weight = 1
