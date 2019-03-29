@@ -28,8 +28,10 @@ class SequenceGenerator():
             self.weightIdx = None
         self.sequences = {}
         
-        for traj in trajectory_layer.getFeatures():
+        nTraj = float(trajectory_layer.featureCount())
+        for i,traj in enumerate(trajectory_layer.getFeatures()):
             self.evaluate_trajectory(traj)
+            progress.setPercentage(i/nTraj*100)
             
     def evaluate_trajectory(self,trajectory):
         points = trajectory.geometry().asPolyline()
