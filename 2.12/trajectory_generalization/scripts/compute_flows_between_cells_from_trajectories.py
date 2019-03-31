@@ -41,7 +41,7 @@ class SequenceGenerator():
             nearest_cell = self.id_to_centroid[id][0]
             nearest_cell_id = nearest_cell.id()
             prev_cell_id = None
-            if len(this_sequence) > 1:
+            if len(this_sequence) >= 1:
                 prev_cell_id = this_sequence[-1]
                 if self.weight_field is not None:
                     weight = trajectory.attributes()[self.weightIdx]
