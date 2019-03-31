@@ -41,12 +41,12 @@ class SequenceGenerator():
             nearest_cell = self.id_to_centroid[id][0]
             nearest_cell_id = nearest_cell.id()
             prev_cell_id = None
+            if self.weight_field is not None:
+                weight = trajectory.attributes()[self.weightIdx]
+            else:
+                weight = 1
             if len(this_sequence) >= 1:
                 prev_cell_id = this_sequence[-1]
-                if self.weight_field is not None:
-                    weight = trajectory.attributes()[self.weightIdx]
-                else:
-                    weight = 1
                 if self.sequences.has_key((prev_cell_id,nearest_cell_id)):
                     self.sequences[(prev_cell_id,nearest_cell_id)] += weight
                 else:
@@ -56,8 +56,8 @@ class SequenceGenerator():
                 m = trajectory.geometry().geometry().pointN(i).m()
                 t = datetime(1970,1,1) + timedelta(seconds=m) + timedelta(hours=8) # Beijing GMT+8
                 h = t.hour 
-                self.id_to_centroid[id][1][0] = self.id_to_centroid[id][1][0] + 1
-                self.id_to_centroid[id][1][h/6+1] = self.id_to_centroid[id][1][h/6+1] + 1
+                self.id_to_centroid[id][1][0] += weight
+                self.id_to_centroid[id][1][h/6+1] += weight
                 this_sequence.append(nearest_cell_id)
     
     def create_flow_lines(self):
