@@ -36,21 +36,19 @@ class SequenceGenerator():
     def evaluate_trajectory(self,trajectory):
         points = trajectory.geometry().asPolyline()
         this_sequence = []
+        weight = 1 if self.weight_field is None else trajectory.attributes()[self.weightIdx]
+        prev_cell_id = None
         for i, pt in enumerate(points):
             id = self.cell_index.nearestNeighbor(pt,1)[0]
             nearest_cell = self.id_to_centroid[id][0]
             nearest_cell_id = nearest_cell.id()
-            prev_cell_id = None
-            if self.weight_field is not None:
-                weight = trajectory.attributes()[self.weightIdx]
-            else:
-                weight = 1
             if len(this_sequence) >= 1:
                 prev_cell_id = this_sequence[-1]
-                if self.sequences.has_key((prev_cell_id,nearest_cell_id)):
-                    self.sequences[(prev_cell_id,nearest_cell_id)] += weight
-                else:
-                    self.sequences[(prev_cell_id,nearest_cell_id)] = weight
+                if nearest_cell_id != prev_cell_id:
+                    if self.sequences.has_key((prev_cell_id,nearest_cell_id)):
+                        self.sequences[(prev_cell_id,nearest_cell_id)] += weight
+                    else:
+                        self.sequences[(prev_cell_id,nearest_cell_id)] = weight
             if nearest_cell_id != prev_cell_id: 
                 # we have changed to a new cell --> up the counter 
                 m = trajectory.geometry().geometry().pointN(i).m()
