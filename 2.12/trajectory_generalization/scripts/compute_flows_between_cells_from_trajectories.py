@@ -28,34 +28,34 @@ class SequenceGenerator():
             self.weightIdx = None
         self.sequences = {}
         
-        for traj in trajectory_layer.getFeatures():
+        nTraj = float(trajectory_layer.featureCount())
+        for i,traj in enumerate(trajectory_layer.getFeatures()):
             self.evaluate_trajectory(traj)
+            progress.setPercentage(i/nTraj*100)
             
     def evaluate_trajectory(self,trajectory):
         points = trajectory.geometry().asPolyline()
         this_sequence = []
+        weight = 1 if self.weight_field is None else trajectory.attributes()[self.weightIdx]
+        prev_cell_id = None
         for i, pt in enumerate(points):
             id = self.cell_index.nearestNeighbor(pt,1)[0]
             nearest_cell = self.id_to_centroid[id][0]
             nearest_cell_id = nearest_cell.id()
-            prev_cell_id = None
-            if len(this_sequence) > 1:
+            if len(this_sequence) >= 1:
                 prev_cell_id = this_sequence[-1]
-                if self.weight_field is not None:
-                    weight = trajectory.attributes()[self.weightIdx]
-                else:
-                    weight = 1
-                if self.sequences.has_key((prev_cell_id,nearest_cell_id)):
-                    self.sequences[(prev_cell_id,nearest_cell_id)] += weight
-                else:
-                    self.sequences[(prev_cell_id,nearest_cell_id)] = weight
+                if nearest_cell_id != prev_cell_id:
+                    if self.sequences.has_key((prev_cell_id,nearest_cell_id)):
+                        self.sequences[(prev_cell_id,nearest_cell_id)] += weight
+                    else:
+                        self.sequences[(prev_cell_id,nearest_cell_id)] = weight
             if nearest_cell_id != prev_cell_id: 
                 # we have changed to a new cell --> up the counter 
                 m = trajectory.geometry().geometry().pointN(i).m()
                 t = datetime(1970,1,1) + timedelta(seconds=m) + timedelta(hours=8) # Beijing GMT+8
                 h = t.hour 
-                self.id_to_centroid[id][1][0] = self.id_to_centroid[id][1][0] + 1
-                self.id_to_centroid[id][1][h/6+1] = self.id_to_centroid[id][1][h/6+1] + 1
+                self.id_to_centroid[id][1][0] += weight
+                self.id_to_centroid[id][1][h/6+1] += weight
                 this_sequence.append(nearest_cell_id)
     
     def create_flow_lines(self):
